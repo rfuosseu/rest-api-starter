@@ -19,7 +19,8 @@
     ],
     "rules": {
         "no-console": 1,
-        "prettier/prettier": 2
+        "prettier/prettier": 2,
+        "no-underscore-dangle": 0
     },
     "settings": {
         "react" : {
