@@ -1,0 +1,15 @@
+{
+    "editor.formatOnType": true,
+    "eslint.format.enable": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "typescript.preferences.quoteStyle": "single",
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.format.semicolons": "insert",
+    "javascript.format.semicolons": "insert"
+}
