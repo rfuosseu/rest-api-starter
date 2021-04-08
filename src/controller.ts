@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Logger from './logger';
 
 export default class Controller {
   public router: Router = Router();
@@ -8,6 +9,8 @@ export default class Controller {
   public basePath!: string;
 
   public routes: IRoute[] = [];
+
+  public static logger: Logger = new Logger('REST_API', true);
 
   /**
    * Inits routes
@@ -19,6 +22,14 @@ export default class Controller {
         this.router[route.method](route.path, ...middlewares, route.handler);
       });
     }
+  }
+
+  /**
+   * Sets logger
+   * @param [logger]
+   */
+  public setLogger(logger?: Logger) {
+    Controller.logger = logger || Controller.logger;
   }
 }
 

@@ -16,7 +16,7 @@ export default class ResponseHttp {
    */
   private _build() {
     const completedAt: Moment = moment();
-    const timeTaken: number = completedAt.diff(this.startedAt, 'ms');
+    const timeTaken: string = `${completedAt.diff(this.startedAt, 'ms')}ms`;
 
     return {
       completedAt,
@@ -37,7 +37,7 @@ export default class ResponseHttp {
       statusCode,
       errorMessages,
       error: true,
-      ...this._build
+      ...this._build()
     };
   }
 
@@ -51,7 +51,7 @@ export default class ResponseHttp {
     return {
       statusCode,
       results,
-      ...this._build
+      ...this._build()
     };
   }
 }

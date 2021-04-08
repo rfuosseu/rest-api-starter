@@ -16,6 +16,7 @@ import Controller from '../controller';
 export default class ApiController extends Controller {
   @request
   public static async geto(req: Request, res: Response) {
+    throw new Error('desolé');
     return true;
   }
 }
