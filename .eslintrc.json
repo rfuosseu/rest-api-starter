@@ -20,7 +20,9 @@
     "rules": {
         "no-console": 1,
         "prettier/prettier": 2,
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "class-methods-use-this": 0,
+        "no-unused-vars": 0
     },
     "settings": {
         "react" : {

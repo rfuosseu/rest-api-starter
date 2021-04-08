@@ -1,16 +1,25 @@
-/* eslint-disable no-param-reassign */
-import ErrorHttp from 'error-http';
 import { Request, Response } from 'express';
-import ResponseHttp, { IReqDetails } from 'response-http';
+import ErrorHttp from './error-http';
+import ResponseHttp from './response-http';
 import Controller, { IRoute } from './controller';
 
+/**
+ * Configure API router
+ * @param config { basePath: string; routes: IRoute[] }
+ * @returns
+ */
+
 export function controller(config: { basePath: string; routes: IRoute[] }) {
-  /* eslint-disable no-param-reassign */
-  return <T extends typeof Controller>(constructor: T) => {
-    constructor.prototype.basePath = config.basePath;
-    constructor.prototype.routes = config.routes;
-  };
-  /* eslint-enable no-param-reassign */
+  type Constructor<T = Controller> = new (...args: any[]) => T;
+  return <TBase extends Constructor>(Base: TBase) =>
+    class extends Base {
+      constructor(...args: any[]) {
+        super(args);
+        this.basePath = config.basePath;
+        this.routes = config.routes;
+        this._initRoutes();
+      }
+    };
 }
 
 /**
@@ -58,19 +67,24 @@ function parseError(err: any): ErrorHttp {
   return error;
 }
 
-export function request(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) {
+/**
+ * Format API Response and handle errors
+ * @param target
+ * @param propertyKey
+ * @param descriptor
+ */
+export function request(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
-  return {
-    value: async (...args: any[]) => {
-      const req: Request = args[0];
-      const res: Response = args[1];
-      try {
-        const results: any = await originalMethod.apply(target, args);
-        return handleResponse(results, res, req.reqDetails);
-      } catch (error) {
-        // logger.error(error);
-        return handleError(parseError(error), res, req.reqDetails);
-      }
+  // eslint-disable-next-line no-param-reassign
+  descriptor.value = async (...args: any[]) => {
+    const req: Request = args[0];
+    const res: Response = args[1];
+    try {
+      const results: any = await originalMethod.apply(target, args);
+      return handleResponse(results, res, req.reqDetails);
+    } catch (error) {
+      // logger.error(error);
+      return handleError(parseError(error), res, req.reqDetails);
     }
   };
 }

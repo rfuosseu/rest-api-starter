@@ -9,18 +9,14 @@ export default class Controller {
 
   public routes: IRoute[] = [];
 
-  constructor() {
-    this._initRoutes();
-  }
-
   /**
    * Inits routes
    */
-  private _initRoutes() {
+  protected _initRoutes() {
     if (this.routes.length > 0) {
       this.routes.forEach((route: IRoute) => {
         const middlewares = route.middlewares || [];
-        this.router[route.method](route.path, ...middlewares, this[route.handler].bind());
+        this.router[route.method](route.path, ...middlewares, route.handler);
       });
     }
   }
@@ -28,7 +24,7 @@ export default class Controller {
 
 export interface IRoute {
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  handler: string;
+  handler: (...args: any[]) => {};
   path: string;
   middlewares?: any[];
 }

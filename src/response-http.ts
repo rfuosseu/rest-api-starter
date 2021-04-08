@@ -55,10 +55,3 @@ export default class ResponseHttp {
     };
   }
 }
-
-export interface IReqDetails {
-  headers: {
-    [key: string]: string;
-  };
-  startAt: Moment;
-}
