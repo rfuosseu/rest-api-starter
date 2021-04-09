@@ -19,7 +19,7 @@ export function controller(config: { basePath: string; routes: IRoute[]; logger?
         this.basePath = config.basePath;
         this.routes = config.routes;
         this.setLogger(config.logger);
-        this._initRoutes();
+        this.initRoutes();
       }
     };
 }

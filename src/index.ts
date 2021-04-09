@@ -4,6 +4,7 @@ import Logger from './logger';
 import ErrorHttp from './error-http';
 import ApiService from './api-service';
 import RequestHttp from './request-http';
+import { controller, request } from './decorator';
 
 export default {
   App,
@@ -11,5 +12,9 @@ export default {
   Logger,
   ErrorHttp,
   ApiService,
-  RequestHttp
-}
+  RequestHttp,
+  controller,
+  request
+};
+
+export { App, Controller, Logger, ErrorHttp, ApiService, RequestHttp, controller, request };

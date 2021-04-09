@@ -15,7 +15,7 @@ export default class Controller {
   /**
    * Inits routes
    */
-  protected _initRoutes() {
+  public initRoutes() {
     if (this.routes.length > 0) {
       this.routes.forEach((route: IRoute) => {
         const middlewares = route.middlewares || [];
