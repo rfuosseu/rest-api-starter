@@ -1,20 +1,29 @@
 {
-  "name": "api-starter",
+  "name": "light-fmk",
   "version": "1.0.0",
-  "description": "REST API kit helpers ",
-  "main": "dist/app.js",
+  "description": "REST API kit starter ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdannoville/light-fmk.git"
+  },
   "scripts": {
     "test": "jest --watch",
     "coverage": "jest --coverage",
     "lint": "eslint ./src --ext .ts --fix",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "build:dev": "tsc -w",
-    "start": "nodemon dist/__tests__/app.js"
+    "prepublish": "npm run build",
+    "start": "nodemon lib/esm/__tests__/app.js"
   },
   "keywords": [
     "REST",
     "API",
     "Typescript"
+  ],  
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "files": [
+    "lib/"
   ],
   "author": "Rodrigue FUOSSEU",
   "license": "ISC",

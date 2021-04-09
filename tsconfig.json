@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "sourceMap": false,
-    "outDir": "dist",
+    "outDir": "lib/esm",
     "rootDir": "./src/",
     "removeComments": true,
     "strict": true,
@@ -12,9 +12,10 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "declaration": true,
 
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
   "include": ["./src/**/*.ts", "./src/**/*.json"],
   "exclude": ["node_modules", "dist", "jest.config.ts"],
