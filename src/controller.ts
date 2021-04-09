@@ -8,6 +8,8 @@ export default class Controller {
 
   public basePath!: string;
 
+  public middlewares: Array<(req: Request, res: Response, next?: NextFunction) => any> = [];
+
   public routes: IRoute[] = [];
 
   public static logger: Logger = new Logger('REST_API', true);
@@ -19,7 +21,7 @@ export default class Controller {
     if (this.routes.length > 0) {
       this.routes.forEach((route: IRoute) => {
         const middlewares = route.middlewares || [];
-        this.router[route.method](route.path, ...middlewares, route.handler);
+        this.router[route.method](route.path, ...this.middlewares, ...middlewares, route.handler);
       });
     }
   }
@@ -35,7 +37,7 @@ export default class Controller {
 
 export interface IRoute {
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  handler: (req: Request, res: Response, next?: NextFunction) => {};
+  handler: (req: Request, res: Response, next?: NextFunction) => any;
   path: string;
-  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => {}>;
+  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => any>;
 }

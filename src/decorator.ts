@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import ErrorHttp from './error-http';
 import ResponseHttp from './response-http';
 import Controller, { IRoute } from './controller';
@@ -10,7 +10,7 @@ import Logger from './logger';
  * @returns
  */
 
-export function controller(config: { basePath: string; routes: IRoute[]; logger?: Logger }) {
+export function controller(config: IControllerConfig) {
   type Constructor<T = Controller> = new (...args: any[]) => T;
   return <TBase extends Constructor>(Base: TBase) =>
     class extends Base {
@@ -18,6 +18,7 @@ export function controller(config: { basePath: string; routes: IRoute[]; logger?
         super(args);
         this.basePath = config.basePath;
         this.routes = config.routes;
+        this.middlewares = config.middlewares || [];
         this.setLogger(config.logger);
         this.initRoutes();
       }
@@ -89,4 +90,11 @@ export function request(target: any, propertyKey: string, descriptor: PropertyDe
       return handleError(parseError(error), res, req.reqDetails);
     }
   };
+}
+
+export interface IControllerConfig {
+  basePath: string;
+  routes: IRoute[];
+  logger?: Logger;
+  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => any>;
 }

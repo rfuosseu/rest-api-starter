@@ -47,10 +47,10 @@ export default class ResponseHttp {
    * @param [statusCode]
    * @returns
    */
-  public render(results: any, statusCode: number = 200) {
+  public render(data: any, statusCode: number = 200) {
     return {
       statusCode,
-      results,
+      data,
       ...this._build()
     };
   }
