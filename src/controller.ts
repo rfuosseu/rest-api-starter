@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import Logger from './logger';
 
 export default class Controller {
@@ -35,7 +35,7 @@ export default class Controller {
 
 export interface IRoute {
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
-  handler: (...args: any[]) => {};
+  handler: (req: Request, res: Response, next?: NextFunction) => {};
   path: string;
-  middlewares?: any[];
+  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => {}>;
 }

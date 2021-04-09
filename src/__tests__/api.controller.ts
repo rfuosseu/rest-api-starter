@@ -2,21 +2,21 @@
 import { Request, Response } from 'express';
 import { controller, request } from '../decorator';
 import Controller from '../controller';
+import TestService from './test.service';
 
 @controller({
   basePath: '/api',
   routes: [
     {
-      path: '/version',
+      path: '/users',
       method: 'get',
-      handler: ApiController.geto
+      handler: ApiController.getUsers
     }
   ]
 })
 export default class ApiController extends Controller {
   @request
-  public static async geto(req: Request, res: Response) {
-    throw new Error('desolé');
-    return true;
+  public static async getUsers(req: Request, res: Response) {
+    return new TestService().getUsers();
   }
 }
