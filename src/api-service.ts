@@ -1,12 +1,13 @@
 import { AxiosInstance } from 'axios';
 import RequestHttp, { IRequestConfig, IApiConfig } from './request-http';
+import Logger from './logger';
 
 type IRequest = Pick<IRequestConfig, 'path' | 'headers' | 'body' | 'form' | 'params' | 'files'>;
 
 export default class ApiService {
   private _requestHttp: RequestHttp;
 
-  constructor(conf: IApiConfig) {
+  constructor(conf: IApiConfig, public logger?: Logger) {
     this._requestHttp = new RequestHttp(conf);
   }
 

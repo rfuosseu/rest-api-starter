@@ -18,7 +18,7 @@ export default class RequestHttp {
       headers: conf.headers || {}
     });
 
-    this._logger = logger || new Logger(conf.name, false);
+    this._logger = logger || new Logger(conf.name, true);
   }
 
   /**

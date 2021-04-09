@@ -3,7 +3,7 @@ import { createLogger, format, Logger as log, transports } from 'winston';
 export default class Logger {
   public logger: log;
 
-  constructor(private _appName: string, private _isProd: boolean = false) {
+  constructor(private _appName: string, private _debug: boolean = true) {
     this.logger = createLogger(this._initLogger());
   }
 
@@ -73,7 +73,7 @@ export default class Logger {
    */
   private _initLogger() {
     return {
-      level: this._isProd ? 'error' : 'debug',
+      level: this._debug ? 'debug' : 'error',
       format: format.combine(
         format.timestamp({ format: 'HH:mm:ss' }),
         format.colorize(),
