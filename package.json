@@ -11,7 +11,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint ./src --ext .ts --fix",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "build:dev": "tsc -w",
+    "build:dev": "tsc -p tsconfig-dev.json -w",
     "prepublish": "npm run build",
     "start": "nodemon lib/esm/__tests__/app.js"
   },
