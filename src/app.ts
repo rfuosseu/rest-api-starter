@@ -6,9 +6,15 @@ import requestDetails from './middleware';
 import ErrorHttp from './error-http';
 import ResponseHttp from './response-http';
 import Logger from './logger';
+import * as FileLoader from './file-loader';
+import Controller from './controller';
 
 export default class App {
-  public app: Application;
+  private _app: Application;
+
+  public get app(): Application {
+    return this._app;
+  }
 
   public trustedProxies: string[] = ['loopback'];
 
@@ -16,14 +22,20 @@ export default class App {
 
   constructor(private readonly port: number, private readonly serverName: string, debug: boolean = true) {
     this._logger = new Logger(serverName, debug);
-    this.app = express();
+    Controller.logger = this._logger;
+    this._app = express();
+
     this._config();
+    this.app.use(requestDetails);
   }
 
   /**
    * Starts app
    */
   public start() {
+    this.app.use(this._handleNotFoundRoutes);
+    this.app.use(this._handleError);
+
     this.app.listen(this.port, () => {
       this._logger.info(`Server ${this.serverName} launched...`);
     });
@@ -103,13 +115,31 @@ export default class App {
   }
 
   /**
+   * Registers controllers
+   * @param basePath
+   * @param rootDir
+   * @param [extension]
+   */
+  public async registerControllers(basePath: string, rootDir: string, extension: string = '.*\\.controller.js') {
+    (await FileLoader.load(extension, rootDir)).forEach((Ctrl: typeof Controller) => {
+      const ctrl: Controller = new Ctrl();
+      this.app.use(`/${basePath}/${ctrl.basePath}`, ctrl.router);
+    });
+  }
+
+  /**
    * Loads routes
    * @param router express app
    */
   public loadRoutes(router: Application) {
-    this.app.use(requestDetails);
     this.app.use(router);
-    this.app.use(this._handleNotFoundRoutes);
-    this.app.use(this._handleError);
+  }
+
+  /**
+   * Loads middleware
+   * @param middlewares
+   */
+  public loadMiddleware(middlewares: Array<(req: Request, res: Response, next: NextFunction) => any>) {
+    middlewares.forEach((middleware) => this.app.use(middleware));
   }
 }

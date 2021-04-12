@@ -8,11 +8,11 @@ export default class Controller {
 
   public basePath!: string;
 
-  public middlewares: Array<(req: Request, res: Response, next?: NextFunction) => any> = [];
+  public middlewares: Array<(req: Request, res: Response, next: NextFunction) => any> = [];
 
   public routes: IRoute[] = [];
 
-  public static logger: Logger = new Logger('REST_API', true);
+  public static logger: Logger;
 
   /**
    * Inits routes
@@ -24,14 +24,6 @@ export default class Controller {
         this.router[route.method](route.path, ...this.middlewares, ...middlewares, route.handler);
       });
     }
-  }
-
-  /**
-   * Sets logger
-   * @param [logger]
-   */
-  public setLogger(logger?: Logger) {
-    Controller.logger = logger || Controller.logger;
   }
 }
 

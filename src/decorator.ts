@@ -2,14 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import ErrorHttp from './error-http';
 import ResponseHttp from './response-http';
 import Controller, { IRoute } from './controller';
-import Logger from './logger';
 
 /**
  * Configure API router
- * @param config { basePath: string; routes: IRoute[]; logger?: Logger  }
+ * @param config { basePath: string; routes: IRoute[]; middlewares?: Array<(req: Request, res: Response, next: NextFunction) => any>; }
  * @returns
  */
-
 export function controller(config: IControllerConfig) {
   type Constructor<T = Controller> = new (...args: any[]) => T;
   return <TBase extends Constructor>(Base: TBase) =>
@@ -19,7 +17,7 @@ export function controller(config: IControllerConfig) {
         this.basePath = config.basePath;
         this.routes = config.routes;
         this.middlewares = config.middlewares || [];
-        this.setLogger(config.logger);
+
         this.initRoutes();
       }
     };
@@ -95,6 +93,5 @@ export function request(target: any, propertyKey: string, descriptor: PropertyDe
 export interface IControllerConfig {
   basePath: string;
   routes: IRoute[];
-  logger?: Logger;
-  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => any>;
+  middlewares?: Array<(req: Request, res: Response, next: NextFunction) => any>;
 }
