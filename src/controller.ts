@@ -39,5 +39,5 @@ export interface IRoute {
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
   handler: (req: Request, res: Response, next?: NextFunction) => any;
   path: string;
-  middlewares?: Array<(req: Request, res: Response, next?: NextFunction) => any>;
+  middlewares?: Array<(req: Request, res: Response, next: NextFunction) => any>;
 }

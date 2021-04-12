@@ -1,8 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+
 import { controller, request } from '../decorator';
 import Controller from '../controller';
 import TestService from './test.service';
+
+function middleware(req: Request, res: Response, next: NextFunction) {
+  next();
+}
 
 @controller({
   basePath: '/api',
@@ -10,7 +14,8 @@ import TestService from './test.service';
     {
       path: '/users',
       method: 'get',
-      handler: ApiController.getUsers
+      handler: ApiController.getUsers,
+      middlewares: [middleware]
     }
   ]
 })
