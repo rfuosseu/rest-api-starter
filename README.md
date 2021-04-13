@@ -1,17 +1,90 @@
 # Overview
-This is a REST API Starter project. It gives access to differents starter kits:
-*  Controllers anotations
-*  API request
-*  Log managment
-*  Express preconfigurate app
 
-# Intallation
+This is a light REST API framework that help developpers to fucus only on value added code. 
 
- 1. Clone the repository
- 2. Install the last version of NodeJs
- 3. `git checkout [desired_branch]` select the starter you want to use
- 4. Install the dependancies `npm install`
- 6. `npm run server` to run the test server
+# Features
+* Robust routing system
+* Ready to use express app
+* Rich logger managment
+* Responses/errors handleling
+* Easy External APIs connection
+
+# Quick start
+This is the quickest and simplest way to use **light-fmk**.
+1. Install the framework
+``` $ npm install --save-dev light-fmk```
+
+2. Create an app
+```
+/* app.js */
+
+import { App } from  'light-fmk';
+
+const port = 3000;
+const appName = 'REST_API';
+const  app = new  App(port, appName);
+...
+/* loads middlewares and routes */
+...
+app.start();
+```
+
+## Add new endpoint
+You need to create a controller class that extends the light-fmk Controller base class. Then use the anotation `@controller(...)` to register routes and the annotation `@request` before every **static class method** used to handle the endpoints.
+```
+/* controllers/test.controller.ts */
+import { controller, Controller, request } from  'light-fmk';
+import { Request, Response } from  'express';
+
+@controller({
+	basePath:  '',
+	middlewares: [...], // Middlewares used for every endpoints defined by this controller 
+	routes: [
+		{
+			path:  '/version',
+			method:  'get',
+			handler:  ApiController.getVersion,
+			middlewares: [...], // Middlewares used for this endpoint
+		},
+		{
+			path:  '/status',
+			method:  'get',
+			handler:  ApiController.getStatus
+		}
+	]
+})
+export  default  class  ApiController  extends  Controller {
+
+	@request
+	public  static  getVersion(req: Request, res: Response) {
+		return  'v1.0';
+	}
+
+	@request
+	public  static  getStatus(req: Request, res: Response) {
+		return { node:  'up' };
+	}
+}
+```
+
+```
+/* app.js */
+
+...
+const  controllerDir: string = `${__dirname}/controllers`;
+const extension: string = '.*\\.controller.js'
+await app.registerControllers(`api/v1.0`, controllerDir, extention); // load automatically all controllers in the controllerDir
+
+app.start()
+```
+
+# API
+
+## App
+## ApiService
+## Controller
+## Logger
+## ErrorHttp
 
 
 # Usefull commands

@@ -18,6 +18,6 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": ["./src/**/*.ts", "./src/**/*.json"],
-  "exclude": ["node_modules", "dist", "jest.config.ts", "./src/**/__tests__"],
+  "exclude": ["node_modules", "lib", "jest.config.ts", "./src/**/__tests__"],
   "files": ["_references.d.ts"]
 }

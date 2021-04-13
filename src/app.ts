@@ -10,21 +10,24 @@ import * as FileLoader from './file-loader';
 import Controller from './controller';
 
 export default class App {
+  public trustedProxies: string[] = ['loopback'];
+
   private _app: Application;
 
   public get app(): Application {
     return this._app;
   }
 
-  public trustedProxies: string[] = ['loopback'];
-
   private _logger: Logger;
+
+  public get logger(): Logger {
+    return this._logger;
+  }
 
   constructor(private readonly port: number, private readonly serverName: string, debug: boolean = true) {
     this._logger = new Logger(serverName, debug);
     Controller.logger = this._logger;
     this._app = express();
-
     this._config();
     this.app.use(requestDetails);
   }

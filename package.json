@@ -1,18 +1,23 @@
 {
   "name": "light-fmk",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "REST API kit starter ",
   "repository": {
     "type": "git",
     "url": "https://github.com/bdannoville/light-fmk.git"
   },
+
+  "bugs": {
+    "url": "https://github.com/bdannoville/light-fmk/issues"
+  },
+  "homepage": "https://github.com/bdannoville/light-fmk#readme",
   "scripts": {
     "test": "jest --watch",
     "coverage": "jest --coverage",
     "lint": "eslint ./src --ext .ts --fix",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "build:dev": "tsc -p tsconfig-dev.json -w",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "start": "nodemon lib/esm/__tests__/app.js"
   },
   "keywords": [
