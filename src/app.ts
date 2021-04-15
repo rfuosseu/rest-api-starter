@@ -125,7 +125,7 @@ export default class App {
    */
   public async registerControllers(basePath: string, rootDir: string, extension: string = '.*\\.controller.js') {
     (await FileLoader.load(extension, rootDir)).forEach((Ctrl: typeof Controller) => {
-      const ctrl: Controller = new Ctrl();
+      const ctrl: Controller = new Ctrl(this._logger);
       this.app.use(`/${basePath}/${ctrl.basePath}`, ctrl.router);
     });
   }

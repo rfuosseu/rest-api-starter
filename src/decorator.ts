@@ -76,18 +76,20 @@ function parseError(err: any): ErrorHttp {
  */
 export function request(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
-  // eslint-disable-next-line no-param-reassign
-  descriptor.value = async (...args: any[]) => {
-    const req: Request = args[0];
-    const res: Response = args[1];
-    try {
-      const results: any = await originalMethod.apply(target, args);
-      return handleResponse(results, res, req.reqDetails);
-    } catch (error) {
-      target.logger.error(error);
-      return handleError(parseError(error), res, req.reqDetails);
+  Object.defineProperty(target, propertyKey, {
+    ...descriptor,
+    value: async (...args: any[]) => {
+      const req: Request = args[0];
+      const res: Response = args[1];
+      try {
+        const results: any = await originalMethod.apply(target, args);
+        return handleResponse(results, res, req.reqDetails);
+      } catch (error) {
+        target.logger.error(error);
+        return handleError(parseError(error), res, req.reqDetails);
+      }
     }
-  };
+  });
 }
 
 export interface IControllerConfig {

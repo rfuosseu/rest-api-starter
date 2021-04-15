@@ -1,7 +1,4 @@
-import winston from 'winston';
 import Logger from '../logger';
-
-jest.mock('winston');
 
 describe('Logger', () => {
   const logger = new Logger('REST');
@@ -11,8 +8,6 @@ describe('Logger', () => {
     logger.logger.debug = jest.fn();
     logger.logger.warning = jest.fn();
     logger.logger.error = jest.fn();
-    winston.createLogger = jest.fn();
-    winston.format.timestamp = jest.fn();
   });
 
   afterEach(() => {
@@ -20,15 +15,11 @@ describe('Logger', () => {
     (logger.logger.debug as jest.Mock).mockRestore();
     (logger.logger.warning as jest.Mock).mockRestore();
     (logger.logger.error as jest.Mock).mockRestore();
-    (winston.createLogger as jest.Mock).mockRestore();
   });
 
   it('should init the logger', () => {
-    expect((winston.createLogger as jest.Mock).mock.calls[0][0]).toEqual({
-      level: 'debug',
-      format: expect.any(Object),
-      transports: [new winston.transports.Console()]
-    });
+    expect(logger.logger.level).toBe('debug');
+    expect(new Logger('Rest', false).logger.level).toBe('error');
   });
 
   it('should log info messages', () => {

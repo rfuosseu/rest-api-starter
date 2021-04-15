@@ -7,13 +7,13 @@ describe('ResponseHttp', () => {
     startAt: moment()
   };
 
-  test('should init response', () => {
+  it('should init response', () => {
     const res = new ResponseHttp(reqDetails);
     expect(res.requestId).toBe('aaaa');
     expect(res.startedAt).toBe(reqDetails.startAt);
   });
 
-  test('should render a success 200 response by default', () => {
+  it('should render a success 200 response by default', () => {
     const res = new ResponseHttp(reqDetails);
     expect(res.render(true)).toEqual({
       completedAt: expect.any(moment),
@@ -25,7 +25,7 @@ describe('ResponseHttp', () => {
     });
   });
 
-  test('should render a success response with the right status', () => {
+  it('should render a success response with the right status', () => {
     const res = new ResponseHttp(reqDetails);
     expect(res.render(true, 201)).toEqual({
       completedAt: expect.any(moment),
@@ -37,7 +37,7 @@ describe('ResponseHttp', () => {
     });
   });
 
-  test('should render an error 500 response by default', () => {
+  it('should render an error 500 response by default', () => {
     const res = new ResponseHttp(reqDetails);
     expect(res.renderError(['ERROR'])).toEqual({
       completedAt: expect.any(moment),
@@ -50,7 +50,7 @@ describe('ResponseHttp', () => {
     });
   });
 
-  test('should render an error response with the right status', () => {
+  it('should render an error response with the right status', () => {
     const res = new ResponseHttp(reqDetails);
     expect(res.renderError(['ERROR'], 400)).toEqual({
       completedAt: expect.any(moment),
