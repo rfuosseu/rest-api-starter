@@ -45,7 +45,7 @@ export default class Logger {
    */
   public apiError(options: any, error: any) {
     this.logger.error(
-      `\n  __API Request__ : ${JSON.stringify(options)} \n  __API Response__ : ${error.response.statusCode}  / ${
+      `\n  __API Request__ : ${JSON.stringify(options)} \n  __API Response__ : ${error.response?.statusCode}  / ${
         error.message
       }`
     );

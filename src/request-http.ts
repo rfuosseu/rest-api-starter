@@ -73,7 +73,8 @@ export default class RequestHttp {
       })
       .catch((error) => {
         this._logger.apiError(config, error);
-        throw new ErrorHttp(error.response?.statusCode, error.message);
+        const status = error.response?.statusCode ?? 500;
+        throw new ErrorHttp(status, error.message);
       });
   }
 }

@@ -18,7 +18,7 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "build:dev": "tsc -p tsconfig-dev.json -w",
     "prepublishOnly": "npm run build",
-    "start": "nodemon lib/esm/__tests__/app.js"
+    "start": "nodemon lib/esm/e2e/app.js"
   },
   "keywords": [
     "REST",

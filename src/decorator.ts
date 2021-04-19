@@ -76,7 +76,8 @@ function parseError(err: any): ErrorHttp {
  */
 export function request(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
-  Object.defineProperty(target, propertyKey, {
+  const { logger } = target;
+  return Object.defineProperty(target, propertyKey, {
     ...descriptor,
     value: async (...args: any[]) => {
       const req: Request = args[0];
@@ -85,7 +86,7 @@ export function request(target: any, propertyKey: string, descriptor: PropertyDe
         const results: any = await originalMethod.apply(target, args);
         return handleResponse(results, res, req.reqDetails);
       } catch (error) {
-        target.logger.error(error);
+        logger.error(error);
         return handleError(parseError(error), res, req.reqDetails);
       }
     }

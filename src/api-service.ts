@@ -8,7 +8,8 @@ export default class ApiService {
   private _requestHttp: RequestHttp;
 
   constructor(conf: IApiConfig, public logger?: Logger) {
-    this._requestHttp = new RequestHttp(conf);
+    this.logger = this.logger || new Logger(conf.name, true);
+    this._requestHttp = new RequestHttp(conf, this.logger);
   }
 
   /**

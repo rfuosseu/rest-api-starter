@@ -1,5 +1,5 @@
 import moment from 'moment';
-import requestDetails from '../../lib/esm/middleware';
+import requestDetails from '../middleware';
 
 describe('middleware', () => {
   it('should init request details and define X-Request-Id', () => {
