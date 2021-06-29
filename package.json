@@ -1,16 +1,16 @@
 {
-  "name": "light-fmk",
-  "version": "1.0.6",
+  "name": "rest-api-starter",
+  "version": "1.0.0",
   "description": "REST API kit starter ",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bdannoville/light-fmk.git"
+    "url": "https://github.com/rfuosseu/rest-api-starter.git"
   },
 
   "bugs": {
-    "url": "https://github.com/bdannoville/light-fmk/issues"
+    "url": "https://github.com/rfuosseu/rest-api-starter/issues"
   },
-  "homepage": "https://github.com/bdannoville/light-fmk#readme",
+  "homepage": "https://github.com/rfuosseu/rest-api-starter#readme",
   "scripts": {
     "test": "jest --watch",
     "coverage": "jest --coverage",
